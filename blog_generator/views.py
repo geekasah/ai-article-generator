@@ -80,17 +80,17 @@ def download_audio(link, title):
 
 def get_transcription(link, title): # using assemblyAI API
     audio_file = download_audio(link, title)
-    API_KEY = 'edd8142bd945408d8c826b00c577cfe5'
-    aai.settings.api_key = API_KEY
+    ASSEMBLYAI_API_KEY = os.environ.get("ASSEMBLYAI_API_KEY")
+    aai.settings.api_key = ASSEMBLYAI_API_KEY
     transcriber = aai.Transcriber()
     transcript = transcriber.transcribe(audio_file)
     print('content transcribed')
     return transcript.text
 
 def generate_blog_from_transcription(transcription):
-    genai.configure(api_key='AIzaSyCA0KGsJQ9OQ40kqQJgKe2XNgvWbHrj3e0')
+    GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
+    genai.configure(api_key=GEMINI_API_KEY)
     model = genai.GenerativeModel('gemini-pro')
-
     prompt = f"Based on the following transcript from a Youtube video, write a comprehensive blog article, try avoid bold, italic words, and point, just make it a paragraph: \n\n {transcription} \n\n Article:"
     response = model.generate_content(prompt)
     print('content is generated')
