@@ -80,7 +80,8 @@ def download_audio(link, title):
 
 def get_transcription(link, title): # using assemblyAI API
     audio_file = download_audio(link, title)
-    aai.settings.api_key = "edd8142bd945408d8c826b00c577cfe5"
+    API_KEY = 'edd8142bd945408d8c826b00c577cfe5'
+    aai.settings.api_key = API_KEY
     transcriber = aai.Transcriber()
     transcript = transcriber.transcribe(audio_file)
     print('content transcribed')
